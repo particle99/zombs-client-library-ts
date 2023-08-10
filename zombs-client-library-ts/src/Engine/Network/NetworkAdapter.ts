@@ -60,23 +60,25 @@ class NetworkAdapter {
   public connect(server: string): void {
       const parsedServer: any = Servers[server];
       this.connectionOptions = parsedServer;
-
-      console.log(parsedServer);
-
+    
       this.connected = false;
       this.connecting = true;
 
+      const options: any = {
+        headers: {
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Cache-Control': 'no-cache',
+            'Origin': "https://zombs.io/",
+            'Host': this.connectionOptions.hostname,
+            'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+        }
+      };
+
+      if(this.agent != null) options.headers.agent = this.agent;
+
       /** websocket */
-      this.socket = new WebSocket(`wss://${this.connectionOptions.hostname}`, {
-          headers: {
-              'Accept-Encoding': 'gzip, deflate, br',
-              'Accept-Language': 'en-US,en;q=0.9',
-              'Cache-Control': 'no-cache',
-              'Origin': "https://zombs.io/",
-              'Host': this.connectionOptions.hostname,
-              'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
-          }
-      })
+      this.socket = new WebSocket(`wss://${this.connectionOptions.hostname}`, options)
 
       /** bind event listeners */
       this.bindEventListeners();
