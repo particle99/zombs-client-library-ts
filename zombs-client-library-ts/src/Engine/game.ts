@@ -38,8 +38,8 @@ class Game {
     /** currentGame object */
     public currentGame: any;
 
-    constructor() {
-        this.network = new NetworkAdapter(this);
+    constructor(agent?: any) {
+        this.network = new NetworkAdapter(this, agent);
         this.world = new World(this);
         this.renderer = new Renderer(this);
         this.metrics = new Metrics(this);
