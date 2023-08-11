@@ -29,6 +29,9 @@ class Game {
     /** preloaded */
     public preloaded: boolean = false;
 
+    /** agent */
+    public agent: any;
+
     /** group */
     public group: any;
 
